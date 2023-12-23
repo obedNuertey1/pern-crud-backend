@@ -20,9 +20,9 @@ app.route('/todos').post(async (req, res) => {
         const newTodo = await Pool.query('INSERT INTO todo (description) VALUES ($1) RETURNING *', [description]);
         
         if(newTodo.rows[0]){
-            res.json({created_todo: true});
+            res.json( { created_todo: true } );
         }else{
-            res.json({created_todo: false});
+            res.json( { created_todo: false } );
         }
 
     } catch (e) {
@@ -34,7 +34,7 @@ app.route('/todos').post(async (req, res) => {
 // get all todos
 app.route('/todos').get(async (req:express.Request, res:express.Response)=>{
     try{
-        const getTodos = await Pool.query('SELECT * FROM todo');
+        const getTodos = await Pool.query('SELECT * FROM todo ORDER BY todo_id DESC');
         console.log(req.body);// logs {}
  
         if(getTodos.rows){
